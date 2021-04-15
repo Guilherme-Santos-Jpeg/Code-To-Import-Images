@@ -1,0 +1,22 @@
+Sub ImportImages()
+    Dim imagens             As Variant
+    Dim imgFileFormat       As String
+    Dim Celula              As String
+    Dim i                   As Long
+    
+    
+    imgFileFormat = "Image Files JPEG (*.jpeg),*.jpeg, Image Files JPG (*.jpg),*.jpg, Image Files PNG (*.png),jpg, Image Files GIF (*.gif),*.gif, Image Files BMP (*.bmp),*.bmp"
+    
+    imagens = Application.GetOpenFilename(imgFileFormat, False, False, False, True)
+    
+    If IsArray(imagens) Then
+        For i = LBound(imagens) To UBound(imagens)
+            Cells(i, 1).Value = Left(Dir(imagens(i), vbDirectory), InStr(1, Dir(imagens(i)), ".", vbTextCompare) - 1)
+            
+            Application.ActiveSheet.Shapes.AddPicture imagens(i), False, True, Cells(i, 2).Left, Cells(i, 2).Top, Cells(i, 2).Width, Cells(i, 2).Height
+            
+          Next i
+    End If
+        
+    
+End Sub
